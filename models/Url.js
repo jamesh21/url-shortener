@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const UrlSchema = new mongoose.Schema({
-    tinyUrl: {
+    shortCode: {
         type: String,
         required: [true, "Please provide a tiny URL"],
     },
-    originUrl: {
+    url: {
         type: String,
         required: [true, "Please provide a original URL"],
     },
