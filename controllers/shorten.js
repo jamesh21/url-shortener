@@ -13,18 +13,19 @@ const createShortUrl = async (req, res) => {
     if (!url || (!urlRegex.test(url))) {
         throw new BadRequestError('url must be passed in and has to be in the correct url format')
     }
-    // create shortened url
-    const shortCode = shortenUrl(url)
-    // map origin url with shorten url
-    const urlData = await Url.create({ shortCode, url });
 
+    // map origin url with shorten url
+    const urlData = await Url.create({ url });
+    // create shortened url
+    const shortCode = shortenUrl(urlData._id)
+    urlData.shortCode = shortCode
+    urlData.save()
     res.status(StatusCodes.CREATED).json({ data: urlData })
 }
 
 // Retrieve an original URL from a short URL
 const getShortUrl = async (req, res) => {
     const { short } = req.params
-    // Use short URL to get original URL
     // query db to get origin url
     // increment access count of this short url
     const url = await Url.findOneAndUpdate({ shortCode: short }, { $inc: { accessCount: 1 } }, { new: true }).select('-accessCount')

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const UrlSchema = new mongoose.Schema({
     shortCode: {
         type: String,
-        required: [true, "Please provide a tiny URL"],
+        unique: true,
     },
     url: {
         type: String,

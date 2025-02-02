@@ -13,12 +13,6 @@ const errorHandler = (err, req, res, next) => {
             .map((item) => item.message)
             .join(",");
     }
-    if (err.code && err.code === 11000) {
-        customError.statusCode = StatusCodes.BAD_REQUEST;
-        customError.message = `Duplicate value entered for ${Object.keys(
-            err.keyValue
-        )} field, please choose another value`;
-    }
     if (err.name === "CastError") {
         customError.message = `No item found with id : ${err.value}`;
         customError.statusCode = StatusCodes.NOT_FOUND;
